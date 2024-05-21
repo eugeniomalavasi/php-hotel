@@ -1,4 +1,3 @@
-<?php ?>
 <?php
 
 $hotels = [
@@ -48,22 +47,28 @@ $hotels = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Hotels PHP</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <?php foreach ($hotels as $features) {?>
-                    <h3><?php echo $features['name']; ?></h3>
-                    <p><?php echo $features['description']; ?></p>
-                    <p><?php echo $features['parking']; ?></p>
-                    <p><?php echo $features['vote']; ?></p>
-                    <p><?php echo $features['distance_to_center']; ?></p>
-                    <?php }?>
-            </div>
+        <div class="row mt-5">
+            <?php foreach ($hotels as $features) { ?>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $features['name']; ?></h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
+                            <p class="card-text"><?php echo $features['description']; ?></p>
+                            <p>Hai il parcheggio:<?php echo $features['parking']; ?></p>
+                            <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
+    </div>
     </div>
 </body>
 
