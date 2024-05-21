@@ -41,14 +41,14 @@ $hotels = [
 ?>
 
 <?php
-$user_parking = true;
+$user_parking = null;
 if (isset($_GET["park"])) {
 
     $user_parking = $_GET["park"];
-    if ($user_parking == 1 || $user_parking == 3) {
+    if ($user_parking == 1) {
         $user_parking = true;
-    } elseif ($user_parking == null) {
-        $user_parking = true;
+    } elseif ($user_parking == 3) {
+        $user_parking = null;
     } else {
         $user_parking = false;
     }
@@ -80,7 +80,7 @@ if (isset($_GET["park"])) {
         </form>
         <div class="row mt-5">
             <?php foreach ($hotels as $features) { ?>
-                <?php if ($features['parking'] == $user_parking) { ?>
+                <?php if ($features['parking'] === $user_parking) { ?>
 
                     <div class="col-4 mb-4">
                         <div class="card" style="width: 18rem;">
@@ -94,7 +94,19 @@ if (isset($_GET["park"])) {
                         </div>
                     </div>
 
-                <?php } ?>
+                <?php } else if ($user_parking === null) { ?>
+                    <div class="col-4 mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $features['name']; ?></h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
+                                <p class="card-text"><?php echo $features['description']; ?></p>
+                                <p>Hai il parcheggio:<?php echo $features['parking']; ?></p>
+                                <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php }?>
 
             <?php } ?>
         </div>
