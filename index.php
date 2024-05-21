@@ -1,5 +1,4 @@
 <?php
-
 $hotels = [
 
     [
@@ -39,8 +38,25 @@ $hotels = [
     ],
 
 ];
+?>
+
+<?php
+$user_parking = true;
+if (isset($_GET["park"])) {
+
+    $user_parking = $_GET["park"];
+    if ($user_parking == 1 || $user_parking == 3) {
+        $user_parking = true;
+    } elseif ($user_parking == null) {
+        $user_parking = true;
+    } else {
+        $user_parking = false;
+    }
+    var_dump($user_parking);
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,19 +69,33 @@ $hotels = [
 
 <body>
     <div class="container">
+        <form action="index.php" method="get" class="mt-5">
+            <label for="parking">Vuoi il parcheggio?</label>
+            <select class="form-select" aria-label="Default select example" id="parking" name="park">
+                <option value="1">Si</option>
+                <option value="2">No</option>
+                <option value="3">Indifferente</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Primary</button>
+        </form>
         <div class="row mt-5">
             <?php foreach ($hotels as $features) { ?>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $features['name']; ?></h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
-                            <p class="card-text"><?php echo $features['description']; ?></p>
-                            <p>Hai il parcheggio:<?php echo $features['parking']; ?></p>
-                            <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
+                <?php if ($features['parking'] == $user_parking) { ?>
+
+                    <div class="col-4 mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $features['name']; ?></h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
+                                <p class="card-text"><?php echo $features['description']; ?></p>
+                                <p>Hai il parcheggio:<?php echo $features['parking']; ?></p>
+                                <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                <?php } ?>
+
             <?php } ?>
         </div>
     </div>
