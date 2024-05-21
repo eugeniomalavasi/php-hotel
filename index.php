@@ -40,8 +40,21 @@ $hotels = [
 ];
 ?>
 
+<?php 
+$user_vote = null;
+
+if (isset($_GET["vote"])) {
+    $user_vote = (int)$_GET["vote"];
+} else {
+    $user_vote = null;
+}
+var_dump($user_vote);
+?>
+
 <?php
 $user_parking = null;
+
+
 if (isset($_GET["park"])) {
 
     $user_parking = $_GET["park"];
@@ -52,7 +65,7 @@ if (isset($_GET["park"])) {
     } else {
         $user_parking = false;
     }
-
+    var_dump($user_parking);
 }
 
 ?>
@@ -69,19 +82,39 @@ if (isset($_GET["park"])) {
 
 <body>
     <div class="container">
-        <form action="index.php" method="get" class="mt-5 w-25">
-            <label for="parking">Vuoi il parcheggio?</label>
-            <select class="form-select" aria-label="Default select example" id="parking" name="park">
-                <option selected value="3">Scegli un'opzione</option>
-                <option value="1">Si</option>
-                <option value="2">No</option>
-                <option value="3">Indifferente</option>
-            </select>
-            <button type="submit" class="btn btn-primary mt-3">Primary</button>
-        </form>
+        <!-- form section -->
+        <div class="row">
+            <form action="index.php" method="get" class="mt-5 w-25">
+
+                    <div class="col">
+                        <label for="parking">Vuoi il parcheggio?</label>
+                        <select class="form-select" aria-label="Default select example" id="parking" name="park">
+                            <option selected value="3">Scegli un'opzione</option>
+                            <option value="1">Si</option>
+                            <option value="2">No</option>
+                            <option value="3">Indifferente</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="vote">Filtra per voto</label>
+                        <select class="form-select" aria-label="Default select example" id="vote" name="vote">
+                            <option selected value="3">Scegli un'opzione</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Invia</button>
+            </form>
+        </div>
+
         <div class="row mt-5">
             <?php foreach ($hotels as $features) { ?>
-                <?php if ($features['parking'] === $user_parking) { ?>
+                <?php if ($features['parking'] === $user_parking && $user_vote >= $features['vote'] ) { ?>
 
                     <div class="col-4 mb-4">
                         <div class="card" style="width: 18rem;">
@@ -89,7 +122,7 @@ if (isset($_GET["park"])) {
                                 <h5 class="card-title"><?php echo $features['name']; ?></h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
                                 <p class="card-text"><?php echo $features['description']; ?></p>
-                                <p>Hai il parcheggio:<?php echo $features['parking'] == 0 ? " no" : " si"; ?></p>
+                                <p>Hai il parcheggio:<?php echo $features['parking'] == 0 ? " No" : " Si"; ?></p>
                                 <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
                             </div>
                         </div>
@@ -102,7 +135,7 @@ if (isset($_GET["park"])) {
                                 <h5 class="card-title"><?php echo $features['name']; ?></h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Voto: <?php echo $features['vote']; ?></h6>
                                 <p class="card-text"><?php echo $features['description']; ?></p>
-                                <p>Hai il parcheggio:<?php echo $features['parking'] == 0 ? " no" : " si"; ?></p>
+                                <p>Hai il parcheggio:<?php echo $features['parking'] == 0 ? " No" : " Si"; ?></p>
                                 <p>Dista dal centro: <?php echo $features['distance_to_center']; ?> km</p>
                             </div>
                         </div>
@@ -116,3 +149,5 @@ if (isset($_GET["park"])) {
 </body>
 
 </html>
+
+
